@@ -1,4 +1,4 @@
-export const host = `http://localhost:5000`
+export const host = `https://chatappashish.onrender.com`
 export const getallmessagesurl = `${host}/api/messages/getallmessages`;
 export const handleSendMsgurl = `${host}/api/messages/addMessage`;
 export const logoutuserurl = `${host}/api/auth/logoutuser`;
