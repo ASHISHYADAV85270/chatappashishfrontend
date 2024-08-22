@@ -1,4 +1,4 @@
-export const host = `https://chatappashish.onrender.com`
+export const host = `http://localhost:4201`; // url of the link where backend is hosted
 export const getallmessagesurl = `${host}/api/messages/getallmessages`;
 export const handleSendMsgurl = `${host}/api/messages/addMessage`;
 export const logoutuserurl = `${host}/api/auth/logoutuser`;
