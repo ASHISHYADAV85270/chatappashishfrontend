@@ -7,6 +7,7 @@ import Welcome from "../components/Welcome";
 import ChatBox from "../components/ChatBox";
 import { io } from "socket.io-client";
 import { settingusersurl, checkauthurl, host } from "../utils/routes";
+import useCheckauthentication from "../utils/useCheckauthentication";
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -17,34 +18,35 @@ const Chat = () => {
 
   /* for checking user is there or not*/
   const [currentUser, setCurruser] = useState(undefined);
-  useEffect(() => {
-    checkauth();
-    async function checkauth() {
-      try {
-        setLoading(true);
-        const data = await axios.post(
-          checkauthurl,
-          {},
-          { withCredentials: true }
-        );
-        if (data.data.success) {
-          const username = data?.data?.user?.username;
-          setCurruser(data.data.user);
-          toast.success(`welcom back ${username}`);
-        } else {
-          toast.error("Login First");
-          navigate("/login");
-        }
-      } catch (error) {
-        console.log("error from chat.jsx");
-      } finally {
-        setLoading(false);
-      }
-    }
-  }, []);
+  const userData=useCheckauthentication();
+  // useEffect(() => {
+  //   checkauth();
+  //   async function checkauth() {
+  //     try {
+  //       setLoading(true);
+  //       const data = await axios.post(
+  //         checkauthurl,
+  //         {},
+  //         { withCredentials: true }
+  //       );
+  //       if (data.data.success) {
+  //         const username = data?.data?.user?.username;
+  //         setCurruser(data.data.user);
+  //         toast.success(`welcom back ${username}`);
+  //       } else {
+  //         toast.error("Login First");
+  //         navigate("/login");
+  //       }
+  //     } catch (error) {
+  //       console.log("error from chat.jsx");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // }, []);
   /**** */
 
-  /***Gettin all contacts other then user */
+  /*** Getting all contacts other then user */
   useEffect(() => {
     settingusers();
     async function settingusers() {
@@ -64,6 +66,7 @@ const Chat = () => {
       }
     }
   }, [currentUser]);
+
 
   /*socketio implementation*/
   useEffect(() => {

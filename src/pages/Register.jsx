@@ -1,13 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
-import { toast } from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { registeruserurl } from "../utils/routes";
+import useCheckauthentication from "../utils/useCheckauthentication";
+
 const Register = () => {
   const navigate = useNavigate();
-  const [buttonDisabled, setButtonDisable] = useState(false);
+  const [buttonDisabled, setButtonDisable] = useState(true);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     username: "",
@@ -15,13 +16,21 @@ const Register = () => {
     userpassword: "",
     userconfirmpass: "",
   });
+  const userData = useCheckauthentication();
+
+  // Redirect if the user is already authenticated
+  useEffect(() => {
+    if (userData) {
+      navigate('/');
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (
-      user.username.length > 3 &&
-      user.useremail.length > 3 &&
-      user.userpassword.length > 3 &&
-      user.userconfirmpass.length > 3
+      user.username.trim().length > 3 &&
+      user.useremail.trim().length > 3 &&
+      user.userpassword.trim().length > 3 &&
+      user.userconfirmpass.trim().length > 3
     ) {
       setButtonDisable(false);
     } else {
@@ -32,7 +41,7 @@ const Register = () => {
   const onRegister = async (e) => {
     e.preventDefault();
     if (user.userpassword !== user.userconfirmpass) {
-      toast.error("Pass and Confirm Pass should be same", {
+      toast.error("Password and Confirm Password should be the same", {
         position: "bottom-right",
         duration: 4000,
       });
@@ -48,34 +57,35 @@ const Register = () => {
       });
       if (data.success) {
         toast.success(data.message);
-        return navigate("/setavatar");
+        navigate("/setavatar");
       } else {
         toast.error(data.message);
         navigate("/login");
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
   };
+
   return (
-    <div className="h-[100vh] flex justify-center items-center  bg-c1">
-      <div className="flex items-center flex-col    ">
+    <div className="h-[100vh] flex justify-center items-center bg-c1">
+      <div className="flex items-center flex-col">
         <div className="text-center">
           <div className="text-4xl font-bold">Create New Account</div>
           <div className="mt-3 text-c3">
-            Connect And Chat with anyone ,anywhere
+            Connect and chat with anyone, anywhere
           </div>
         </div>
-        <div className="flex  flex-row first-line:items-center gap-2 w-full mt-10 mb-5 ">
+        <div className="flex flex-row items-center gap-2 w-full mt-10 mb-5">
           <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/2 h-14 rounded-md cursor-pointer p-[1px]">
-            <div className="flex flex-row items-center  justify-center font-semibold bg-c1 w-full h-full rounded-md gap-3">
+            <div className="flex flex-row items-center justify-center font-semibold bg-c1 w-full h-full rounded-md gap-3">
               <IoLogoGoogle size={24} /> <span>Login with Google</span>
             </div>
           </div>
           <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/2 h-14 rounded-md cursor-pointer p-[1px]">
-            <div className="flex flex-row items-center  justify-center font-semibold bg-c1 w-full h-full rounded-md gap-3">
+            <div className="flex flex-row items-center justify-center font-semibold bg-c1 w-full h-full rounded-md gap-3">
               <IoLogoFacebook size={24} /> <span>Login with Facebook</span>
             </div>
           </div>
@@ -86,13 +96,13 @@ const Register = () => {
           <span className="w-5 h-[1px] bg-c3"></span>
         </div>
         <form
-          className=" flex flex-col mt-5 items-center gap-3 w-[500px]"
+          className="flex flex-col mt-5 items-center gap-3 w-[500px]"
           onSubmit={onRegister}
         >
           <input
             type="text"
             placeholder="Display Name"
-            className="w-full h-14 bg-c5 rounded-xl outline-none border-none  text-c3 px-5"
+            className="w-full h-14 bg-c5 rounded-xl outline-none border-none text-c3 px-5"
             autoComplete="off"
             value={user.username}
             onChange={(e) => setUser({ ...user, username: e.target.value })}
@@ -100,7 +110,7 @@ const Register = () => {
           <input
             type="email"
             placeholder="Email"
-            className="w-full h-14 bg-c5 rounded-xl outline-none border-none  text-c3 px-5"
+            className="w-full h-14 bg-c5 rounded-xl outline-none border-none text-c3 px-5"
             autoComplete="off"
             value={user.useremail}
             onChange={(e) => setUser({ ...user, useremail: e.target.value })}
@@ -124,22 +134,22 @@ const Register = () => {
             }
           />
           <div className="w-full text-right text-c3">
-            <span className="cursor-pointer">Forget Password ?</span>
+            <span className="cursor-pointer">Forget Password?</span>
           </div>
           <button
-            className={`mt-4 w-full h-14 rounded-xl  text-base font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 outline-none cursor-pointer ${
+            className={`mt-4 w-full h-14 rounded-xl text-base font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 outline-none cursor-pointer ${
               buttonDisabled ? "opacity-50" : ""
             } `}
             disabled={buttonDisabled}
             type="submit"
           >
-            {loading ? "Waiting" : "Create User"}
+            {loading ? "Waiting..." : "Create User"}
           </button>
         </form>
         <div className="flex justify-center gap-1 text-c3 mt-5">
-          <span>Already have a Account ?</span>
+          <span>Already have an Account?</span>
           <NavLink
-            to={"/login"}
+            to="/login"
             className="font-semibold text-white cursor-pointer underline underline-offset-2"
           >
             Login Now
