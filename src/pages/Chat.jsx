@@ -18,33 +18,31 @@ const Chat = () => {
 
   /* for checking user is there or not*/
   const [currentUser, setCurruser] = useState(undefined);
-  const userData=useCheckauthentication();
-   useEffect(() => {
-     checkauth();
-     async function checkauth() {
-       try {
-         setLoading(true);
-         const data = await axios.post(
-           checkauthurl,
-         {},
-         { withCredentials: true }
-         );
-         if (data.data.success) {
-           const username = data?.data?.user?.username;
+  useEffect(() => {
+    checkauth();
+    async function checkauth() {
+      try {
+        setLoading(true);
+        const data = await axios.post(
+          checkauthurl,
+          {},
+          { withCredentials: true }
+        );
+        if (data.data.success) {
+          const username = data?.data?.user?.username;
           setCurruser(data.data.user);
-           toast.success(`welcom back ${username}`);
-         } else {
-           toast.error("Login First");
-           navigate("/login");
-         }
-       } catch (error) {
-         console.log("error from chat.jsx");
-       } finally {
-         setLoading(false);
-       }
-     }
-   }, []);
- 
+          toast.success(`welcom back ${username}`);
+        } else {
+          toast.error("Login First");
+          navigate("/login");
+        }
+      } catch (error) {
+        console.log("error from chat.jsx");
+      } finally {
+        setLoading(false);
+      }
+    }
+  }, []);
 
   /*** Getting all contacts other then user */
   useEffect(() => {
@@ -67,7 +65,6 @@ const Chat = () => {
     }
   }, [currentUser]);
 
-
   /*socketio implementation*/
   useEffect(() => {
     if (currentUser) {
@@ -82,24 +79,30 @@ const Chat = () => {
         <div className="text-black">Loading</div>
       ) : (
         <div className="h-[100vh] flex bg-[#1F1F1F]">
-            <div className="w-[15vw] overflow-hidden">
-              <Contacts
-                currcontacts={currcontacts}
-                currentUser={currentUser}
-                setCurrentChat={setCurrentChat}
-              />
-            </div>
-            <div className=" w-[85vw] overflow-hidden">
-              {currentChat === undefined ? (
-                <Welcome currentUser={currentUser} />
-              ) : (
+          {!currentChat ? (
+            <Welcome
+              currentUser={currentUser}
+              setCurrentChat={setCurrentChat}
+              currcontacts={currcontacts}
+            />
+          ) : (
+            <>
+              <div className="w-[15vw] overflow-hidden">
+                <Contacts
+                  currcontacts={currcontacts}
+                  currentUser={currentUser}
+                  setCurrentChat={setCurrentChat}
+                />
+              </div>
+              <div className=" w-[85vw] overflow-hidden">
                 <ChatBox
                   currentChat={currentChat}
                   currentUser={currentUser}
                   socket={socket}
                 />
-              )}
-            </div>
+              </div>
+            </>
+          )}
         </div>
       )}
 

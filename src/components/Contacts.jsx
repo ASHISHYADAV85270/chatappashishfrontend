@@ -4,7 +4,7 @@ import useravatar from "../assets/useravatar.png";
 const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
-  const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [currentSelected, setCurrentSelected] = useState(0);
   const [loading, setLoading] = useState(false);
 
   /********to fetch data of the chats of the user */
