@@ -51,7 +51,6 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
         );
         const { projectMessages } = resp.data;
         setMessages(projectMessages);
-        console.log({ messages });
       } catch (error) {
         console.log("Error");
         navigate("/");
@@ -92,13 +91,13 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
 
   return (
     <div className="flex flex-col  h-full  w-full ">
-      <div className="h-[11%] ">
+      <div className="h-[7vh] ">
         <ChatBoxheader
           username={currentChat.username}
           avataImage={currentChat.avataImage}
         />
       </div>
-      <div className="chat-messages  p-7 flex flex-col overflow-auto gap-[1rem] h-[77%] bg-c1  border-r-[0.2rem] border-c3">
+      <div className="chat-messages  p-7 flex flex-col overflow-auto  gap-4 h-[86vh]   bg-[#1F0F2C]  opacity-95">
         {!loading &&
           messages.map((message, index) => {
             return (
@@ -111,27 +110,21 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
                   }`}
                 >
                   <div
-                    className={`content   text-[1.4rem]  border-[0.1rem]   max-w-[40%]  ${
+                    className={`content text-lg max-w-[40%] break-words  px-5 py-3   rounded-3xl ${
                       message.fromSelf
-                        ? " bg-c3 border-c5 "
-                        : " bg-c5 border-c3"
+                        ? "text-[#FFF] bg-[#830EF7]"
+                        : "text-[#BABABA] bg-[#1F1F1F]"
                     } `}
-                  >
-                    <p
-                      className={` break-words  ${
-                        message.fromSelf ? " text-c5 " : " text-c3"
-                      }`}
-                    >
+                  >                  
                       {message.message}
-                    </p>
                   </div>
                 </div>
               </div>
             );
           })}
       </div>
-      <div className="h-[12%] border-t-[0.2rem] border-c3 ">
-        <ChatBoxInput handleSendMsg={handleSendMsg} />
+      <div className="h-[7vh]">
+        <ChatBoxInput handleSendMsg={handleSendMsg} recieverName={currentChat.username} />
       </div>
       <Toaster />
     </div>

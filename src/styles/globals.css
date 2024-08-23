@@ -44,13 +44,15 @@ body {
     text-align: center;
     padding-bottom: 10px;
 }
-.contacts{
-    &::-webkit-scrollbar {
-        width: 0.1rem;
-        &-thumb {
-          background-color: #14050539;
-          width: 0.1rem;
-          border-radius: 1rem;
-        }
-      }
+
+.contacts::-webkit-scrollbar,
+.chat-messages::-webkit-scrollbar {
+    width: 0.1rem;
+}
+
+.contacts::-webkit-scrollbar-thumb,
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: #14050539;
+    width: 1rem;
+    border-radius: 1rem;
 }

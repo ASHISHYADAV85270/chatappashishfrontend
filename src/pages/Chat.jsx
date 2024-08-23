@@ -81,16 +81,15 @@ const Chat = () => {
       {loading ? (
         <div className="text-black">Loading</div>
       ) : (
-        <div className="h-[100vh] bg-c1 w-[100vw] flex flex-col justify-center  items-center toooop">
-          <div className=" h-[85vh] w-[85vw]  grid  grid-flow-col bg-c5 overflow-hidden">
-            <div className="w-[18.5vw] overflow-hidden">
+        <div className="h-[100vh] flex bg-[#1F1F1F]">
+            <div className="w-[15vw] overflow-hidden">
               <Contacts
                 currcontacts={currcontacts}
                 currentUser={currentUser}
                 setCurrentChat={setCurrentChat}
               />
             </div>
-            <div className="w-[66.5vw] overflow-hidden">
+            <div className=" w-[85vw] overflow-hidden">
               {currentChat === undefined ? (
                 <Welcome currentUser={currentUser} />
               ) : (
@@ -101,7 +100,6 @@ const Chat = () => {
                 />
               )}
             </div>
-          </div>
         </div>
       )}
 
