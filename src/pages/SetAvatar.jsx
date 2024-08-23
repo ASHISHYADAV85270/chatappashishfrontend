@@ -75,8 +75,8 @@ function SetAvatar() {
         }
         setAvatars(data);
       } catch (error) {
-        toast.error("Some error please try again");
-        navigate("/login");
+        toast.error("Avatar Api Limit Excedded");
+        navigate("/");
       } finally {
         setLoading(false);
       }
