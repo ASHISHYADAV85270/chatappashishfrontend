@@ -19,32 +19,32 @@ const Chat = () => {
   /* for checking user is there or not*/
   const [currentUser, setCurruser] = useState(undefined);
   const userData=useCheckauthentication();
-  // useEffect(() => {
-  //   checkauth();
-  //   async function checkauth() {
-  //     try {
-  //       setLoading(true);
-  //       const data = await axios.post(
-  //         checkauthurl,
-  //         {},
-  //         { withCredentials: true }
-  //       );
-  //       if (data.data.success) {
-  //         const username = data?.data?.user?.username;
-  //         setCurruser(data.data.user);
-  //         toast.success(`welcom back ${username}`);
-  //       } else {
-  //         toast.error("Login First");
-  //         navigate("/login");
-  //       }
-  //     } catch (error) {
-  //       console.log("error from chat.jsx");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  // }, []);
-  /**** */
+   useEffect(() => {
+     checkauth();
+     async function checkauth() {
+       try {
+         setLoading(true);
+         const data = await axios.post(
+           checkauthurl,
+         {},
+         { withCredentials: true }
+         );
+         if (data.data.success) {
+           const username = data?.data?.user?.username;
+          setCurruser(data.data.user);
+           toast.success(`welcom back ${username}`);
+         } else {
+           toast.error("Login First");
+           navigate("/login");
+         }
+       } catch (error) {
+         console.log("error from chat.jsx");
+       } finally {
+         setLoading(false);
+       }
+     }
+   }, []);
+ 
 
   /*** Getting all contacts other then user */
   useEffect(() => {

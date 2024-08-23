@@ -16,14 +16,6 @@ const Register = () => {
     userpassword: "",
     userconfirmpass: "",
   });
-  const userData = useCheckauthentication();
-
-  // Redirect if the user is already authenticated
-  useEffect(() => {
-    if (userData) {
-      navigate('/');
-    }
-  }, [userData]);
 
   useEffect(() => {
     if (
