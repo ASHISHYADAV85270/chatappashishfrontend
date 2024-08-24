@@ -8,6 +8,7 @@ import { logoutuserurl } from "../utils/routes";
 import { toast, Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Avatar from "./Avatar";
 
 const ContactFooter = ({ currentUserImage, currentUserName }) => {
   const navigate = useNavigate();
@@ -31,22 +32,16 @@ const ContactFooter = ({ currentUserImage, currentUserName }) => {
 
   return (
     <div className="flex  gap-3 p-3 items-center h-[7vh]  border-t-slate-50 border-t-[0.4px]">
-      <img
-        src={
-          currentUserImage
-            ? `data:image/svg+xml;base64,${currentUserImage}`
-            : useravatar
-        }
-        alt="User avatar"
-        className="h-9 rounded-full"
-      />
-
+      <Avatar avatarImage={currentUserImage} />
       <h2 className=" uppercase">{currentUserName}</h2>
-
       <Button onClick={handleClick} size="small">
         <EditNoteOutlinedIcon sx={{ color: "#fff" }} />
       </Button>
-      <Menu id="basic-menu" open={anchorEl} onClose={handleClose}>
+      <Menu
+        id="basic-menu"
+        open={anchorEl ? true : false}
+        onClose={handleClose}
+      >
         <MenuItem onClick={handleClose}>Change Avatar</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>

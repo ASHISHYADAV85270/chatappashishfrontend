@@ -1,21 +1,14 @@
 import React from "react";
 import Logout from "./Logout";
-import useravatar from '../assets/useravatar.png';
+import useravatar from "../assets/useravatar.png";
+import Avatar from "./Avatar";
 
-const ChatBoxheader = ({ username, avataImage }) => {
+const ChatBoxheader = ({ username, avatarImage }) => {
   return (
     <div className=" box-border h-full overflow-hidden bg-[#1F1F1F] border-b-slate-50 border-b-[0.4px]">
       <div className=" h-full  flex items-center  relative">
         <div className="flex  gap-3   items-center mt-3 ml-5 mb-[0.56rem] ">
-          <img
-            src={
-              avataImage
-                ? `data:image/svg+xml;base64,${avataImage}`
-                : useravatar
-            }
-            alt="User avatar"
-            className="h-9 rounded-full"
-          />
+          <Avatar avatarImage={avatarImage} />
           <h2 className=" uppercase ">{username}</h2>
         </div>
         <div className="absolute right-3">

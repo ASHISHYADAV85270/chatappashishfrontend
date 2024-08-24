@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.svg";
 import ContactFooter from "./ContactFooter";
 import useravatar from "../assets/useravatar.png";
+import Avatar from "./Avatar.jsx";
 
 const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
@@ -41,15 +42,8 @@ const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
                     setCurrentChat(contact);
                   }}
                 >
-                  <img
-                    src={
-                      contact?.avataImage
-                        ? `data:image/svg+xml;base64,${contact?.avataImage}`
-                        : useravatar
-                    }
-                    alt="User avatar"
-                    className="h-9 rounded-full"
-                  />
+                  <Avatar avatarImage={contact?.avataImage} />
+
                   <h3
                     className={`text-lg uppercase text-[#C8C8C8] flex ${
                       index == currentSelected ? "translate-x-2 text-black" : ""

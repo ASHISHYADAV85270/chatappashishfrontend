@@ -43,9 +43,7 @@ export default function ChatBoxInput({ handleSendMsg, recieverName }) {
           className="w-full p-2 rounded-md bg-transparent text-white border  focus:outline-none"
         />
       </div>
-      <button
-        type="submit"
-      >
+      <button type="submit">
         <span>
           <IoMdSend size={"30px"} className="  text-black hover:text-c3" />
         </span>

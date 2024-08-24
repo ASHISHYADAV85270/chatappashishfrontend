@@ -5,12 +5,16 @@ import { toast, Toaster } from "react-hot-toast";
 import loader from "../assets/loader.gif";
 import { Buffer } from "buffer";
 import { setProfilePictureurl, checkauthurl } from "../utils/routes";
+import { baseAvatarUrl, randomAvatars } from "../utils/avatarList";
+
 function SetAvatar() {
   const api_route_for_images = "https://api.multiavatar.com/54433"; //for getting random images
   const navigate = useNavigate();
 
   // for setting avatar
-  const [avatars, setAvatars] = useState([]);
+  const [avatars, setAvatars] = useState(randomAvatars);
+  console.log(randomAvatars);
+
   const [loading, setLoading] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
@@ -59,31 +63,6 @@ function SetAvatar() {
   }, []);
   /**** */
 
-  useEffect(() => {
-    const getimagesdata = async () => {
-      try {
-        const data = [];
-        setLoading(true);
-        for (let i = 0; i < 5; i++) {
-          const x = Math.round(Math.random() * 1000);
-          const avatarImage = await axios.get(
-            `${api_route_for_images}${x}${process.env.AVATARKEY}`
-          );
-          const buffer = new Buffer(avatarImage.data);
-          const stringimagedata = buffer.toString("base64");
-          data.push(stringimagedata);
-        }
-        setAvatars(data);
-      } catch (error) {
-        toast.error("Avatar Api Limit Excedded");
-        navigate("/");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getimagesdata();
-  }, [currentUser]);
-
   return (
     <div className=" h-[100vh] bg-c1 flex flex-col items-center justify-center gap-9 w-[100vw]">
       {loading ? (
@@ -95,20 +74,20 @@ function SetAvatar() {
           </h1>
           <div className="flex justify-center items-center gap-20 h-[120px] font-bold text-c3">
             {loading ? "Please Refersh Avatar not Fetched" : ""}
-            {avatars.map((avatar, index) => {
+            {avatars.map((curr_url, index) => {
               return (
                 <div
-                  className={`  ${
+                  className={` overflow-hidden rounded-full ${
                     selectedAvatar === index
-                      ? " border-[#4e0eff] border-[0.4rem] rounded-full"
+                      ? " border-[#4e0eff] border-[0.4rem]  "
                       : ""
                   }`}
                   id={index}
                 >
                   <img
-                    src={`data:image/svg+xml;base64,${avatar}`}
+                    src={curr_url}
                     alt="avatar"
-                    key={avatar}
+                    key={index}
                     onClick={() => setSelectedAvatar(index)}
                     className="h-[6rem] ease-in-out  cursor-pointer"
                   />

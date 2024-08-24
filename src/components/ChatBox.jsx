@@ -51,7 +51,7 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
         );
         const { projectMessages } = resp.data;
         console.log(projectMessages);
-        
+
         setMessages(projectMessages);
       } catch (error) {
         console.log("Error");
@@ -70,7 +70,7 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
       { withCredentials: true }
     );
 
-    if (data.data.success) {      
+    if (data.data.success) {
       toast.success(data.data.message);
       socket.current.emit("send-msg", {
         to: currentChat._id,
@@ -90,7 +90,7 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
       <div className="h-[7vh] ">
         <ChatBoxheader
           username={currentChat.username}
-          avataImage={currentChat.avataImage}
+          avatarImage={currentChat.avataImage}
         />
       </div>
       <div className="chat-messages  p-7 flex flex-col overflow-auto  gap-4 h-[86vh]   bg-[#1F0F2C]  opacity-95">
@@ -111,8 +111,8 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
                         ? "text-[#FFF] bg-[#830EF7]"
                         : "text-[#BABABA] bg-[#1F1F1F]"
                     } `}
-                  >                  
-                      {message.message}
+                  >
+                    {message.message}
                   </div>
                 </div>
               </div>
@@ -120,7 +120,10 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
           })}
       </div>
       <div className="h-[7vh]">
-        <ChatBoxInput handleSendMsg={handleSendMsg} recieverName={currentChat.username} />
+        <ChatBoxInput
+          handleSendMsg={handleSendMsg}
+          recieverName={currentChat.username}
+        />
       </div>
       <Toaster />
     </div>
