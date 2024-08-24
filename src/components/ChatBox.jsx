@@ -50,6 +50,8 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
           { withCredentials: true }
         );
         const { projectMessages } = resp.data;
+        console.log(projectMessages);
+        
         setMessages(projectMessages);
       } catch (error) {
         console.log("Error");
@@ -62,24 +64,18 @@ const ChatBox = ({ currentChat, currentUser, socket }) => {
 
   /*** sending messages */
   const handleSendMsg = async (msg) => {
-    // console.log(msg);
-
     const data = await axios.post(
       handleSendMsgurl,
       { from: currentUser._id, to: currentChat._id, message: msg },
       { withCredentials: true }
     );
-    if (data.data.success) {
+
+    if (data.data.success) {      
       toast.success(data.data.message);
       socket.current.emit("send-msg", {
         to: currentChat._id,
-        from: data._id,
+        from: currentUser._id,
         msg,
-      });
-      await axios.post(sendMessageRouteurl, {
-        from: data._id,
-        to: currentChat._id,
-        message: msg,
       });
       const msgs = [...messages];
       msgs.push({ fromSelf: true, message: msg });
