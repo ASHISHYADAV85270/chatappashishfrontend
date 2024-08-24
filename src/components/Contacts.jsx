@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.svg";
+import ContactFooter from "./ContactFooter";
 import useravatar from "../assets/useravatar.png";
+
 const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -27,7 +29,11 @@ const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
               return (
                 <div
                   className={`flex flex-row items-center gap-[1rem] h-12 bg-[#1F1F1F] cursor-pointer w-[95%] p-[0.4rem] transition duration-500 ease-in-out rounded-3xl
-            ${index === currentSelected ? " border-slate-50 border-[0.4px] text-[#fff] shadow-2xl bg-white" : "hover:border-slate-300 hover:border-[0.4px] hover:bg-slate-800 hover:opacity-75 "}
+            ${
+              index === currentSelected
+                ? " border-slate-50 border-[0.4px] text-[#fff] shadow-2xl bg-white"
+                : "hover:border-slate-300 hover:border-[0.4px] hover:bg-slate-800 hover:opacity-75 "
+            }
           `}
                   key={index}
                   onClick={() => {
@@ -44,27 +50,24 @@ const Contacts = ({ currcontacts, currentUser, setCurrentChat }) => {
                     alt="User avatar"
                     className="h-9 rounded-full"
                   />
-                  <h3 className={`text-lg uppercase text-[#C8C8C8] flex ${index==currentSelected ? "translate-x-2 text-black":""} `}>
+                  <h3
+                    className={`text-lg uppercase text-[#C8C8C8] flex ${
+                      index == currentSelected ? "translate-x-2 text-black" : ""
+                    } `}
+                  >
                     {contact?.username}
-                    {index===currentSelected ? <span className="text-[6px] ml-1">🟢</span>:null}
+                    {index === currentSelected ? (
+                      <span className="text-[6px] ml-1">🟢</span>
+                    ) : null}
                   </h3>
                 </div>
               );
             })}
           </div>
-          <div className="flex  gap-3 p-3 items-center h-[7vh]  border-t-slate-50 border-t-[0.4px]">
-            <img
-              src={
-                currentUserImage
-                  ? `data:image/svg+xml;base64,${currentUserImage}`
-                  : useravatar
-              }
-              alt="User avatar"
-              className="h-9 rounded-full"
-            />
-
-            <h2 className=" uppercase">{currentUserName}</h2>
-          </div>
+          <ContactFooter
+            currentUserImage={currentUserImage}
+            currentUserName={currentUserName}
+          />
         </div>
       )}
     </>
