@@ -19,6 +19,7 @@ function SetAvatar() {
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
   const setProfilePicture = async () => {
+    setLoading(true);
     try {
       if (selectedAvatar === undefined) {
         toast.error("Please Select a Avatar");
@@ -39,6 +40,8 @@ function SetAvatar() {
     } catch (error) {
       toast.error("error in the setavatar calling");
       navigate("/login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,9 +98,17 @@ function SetAvatar() {
               );
             })}
           </div>
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/4 h-14 rounded-md cursor-pointer p-[1px]">
+          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/4 h-14 rounded-md  p-[1px]">
             <div className="flex  items-center  text-2xl  justify-center font-semibold bg-c1 h-full rounded-md gap-3">
-              <button onClick={setProfilePicture}>Set Avatar</button>
+              <button
+                onClick={setProfilePicture}
+                className={`${
+                  loading ? "cursor-not-allowed " : "cursor-pointer"
+                }`}
+                disabled={loading}
+              >
+                Set Avatar
+              </button>
             </div>
           </div>
         </>

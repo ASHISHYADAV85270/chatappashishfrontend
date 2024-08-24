@@ -30,6 +30,10 @@ const ContactFooter = ({ currentUserImage, currentUserName }) => {
     }
   };
 
+  const handleAvatarChange = () => {
+    navigate("/setavatar");
+  };
+
   return (
     <div className="flex  gap-3 p-3 items-center h-[7vh]  border-t-slate-50 border-t-[0.4px]">
       <Avatar avatarImage={currentUserImage} />
@@ -42,7 +46,7 @@ const ContactFooter = ({ currentUserImage, currentUserName }) => {
         open={anchorEl ? true : false}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Change Avatar</MenuItem>
+        <MenuItem onClick={handleAvatarChange}>Change Avatar</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
