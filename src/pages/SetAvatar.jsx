@@ -13,8 +13,6 @@ function SetAvatar() {
 
   // for setting avatar
   const [avatars, setAvatars] = useState(randomAvatars);
-  console.log(randomAvatars);
-
   const [loading, setLoading] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
