@@ -11,7 +11,7 @@ const Welcome = ({ currentUser, setCurrentChat, currcontacts }) => {
         </span>
       </h1>
       <h3
-        className="text-red-600 text-lg hover:cursor-pointer p-2 rounded-lg hover:bg-red-600 hover:text-white mt-3"
+        className="text-green-600 text-lg hover:cursor-pointer p-2 rounded-lg hover:bg-green-600 hover:text-white mt-3"
         onClick={() => setCurrentChat(currcontacts[0])}
       >
         Start Messaging.
